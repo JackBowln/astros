@@ -1,20 +1,24 @@
 import type { Launch } from '@/types/launch';
 import HttpClient from '../http/HttpClient';
-// import { User } from './types';
+import type { Countries } from '@/types';
 
-export class SpaceXApi extends HttpClient {
-  private static classInstance?: SpaceXApi;
+export class MainApi extends HttpClient {
+  private static classInstance?: MainApi;
 
-  public constructor() {
+  private constructor() {
     super(import.meta.env.VITE_API_URL);
   }
+
   public static getInstance() {
     if (!this.classInstance) {
-      this.classInstance = new SpaceXApi();
+      this.classInstance = new MainApi();
     }
 
     return this.classInstance;
   }
-  public getLaunches = () => this.instance.get<Launch>('/launches');
+
+
+  public getCountries = () => this.instance.get<Countries.RootObject[]>('/all');
   
+  public getCountry = (name: string) => this.instance.get<Countries.RootObject>(`/name/${name}`);
 }
