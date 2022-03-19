@@ -1,12 +1,20 @@
+import type { Launch } from '@/types/launch';
 import HttpClient from '../http/HttpClient';
 // import { User } from './types';
 
-class MainApi extends HttpClient {
-  public constructor() {
-    super('https://api.awesome-site.com');
-  }
+export class SpaceXApi extends HttpClient {
+  private static classInstance?: SpaceXApi;
 
-  public getUsers = () => this.instance.get<any[]>('/users');
+  public constructor() {
+    super(import.meta.env.VITE_API_URL);
+  }
+  public static getInstance() {
+    if (!this.classInstance) {
+      this.classInstance = new SpaceXApi();
+    }
+
+    return this.classInstance;
+  }
+  public getLaunches = () => this.instance.get<Launch>('/launches');
   
-  public getUser = (id: string) => this.instance.get<any>(`/users/${id}`);
 }
