@@ -1,12 +1,22 @@
 import HttpClient from '../http/HttpClient';
-// import { User } from './types';
+import type { Countries } from '@/types';
 
 class MainApi extends HttpClient {
-  public constructor() {
-    super('https://api.awesome-site.com');
+  private static classInstance?: MainApi;
+
+  private constructor() {
+    super(import.meta.env.VITE_API_URL);
   }
 
-  public getUsers = () => this.instance.get<any[]>('/users');
+  public static getInstance() {
+    if (!this.classInstance) {
+      this.classInstance = new MainApi();
+    }
+
+    return this.classInstance;
+  }
+
+  public getCountries = () => this.instance.get<Countries.RootObject[]>('/all');
   
-  public getUser = (id: string) => this.instance.get<any>(`/users/${id}`);
+  public getCountry = (name: string) => this.instance.get<Countries.RootObject>(`/name/${name}`);
 }
