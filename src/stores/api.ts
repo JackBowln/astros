@@ -1,16 +1,28 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia"
+import { MainApi } from "@/services/index"
+import type { Countries } from '../types';
 
-export const useCounterStore = defineStore({
-  id: 'counter',
-  state: () => ({
-    counter: 0
-  }),
-  getters: {
-    doubleCount: (state) => state.counter * 2
-  },
+export type RootState = {
+  data: Countries.RootObject[]
+}
+
+export const useApi = defineStore({
+  id: "launches",
+  state: () =>
+    ({
+      data: [],
+    } as RootState),
   actions: {
-    increment() {
-      this.counter++
-    }
-  }
+    async fetchLaunches() {
+      try {
+        const api = MainApi.getInstance()
+        this.data = await api.getCountries()
+      } catch (error) {
+        // showTooltip(error)
+        // let the form component display the error
+        console.error(error)
+        return error
+      }
+    },
+  },
 })

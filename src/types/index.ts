@@ -23,7 +23,7 @@ export declare module Countries {
     }
 
     export interface Name {
-        common?: string;
+        common: string;
         official?: string;
         nativeName?: NativeName;
     }
@@ -232,7 +232,7 @@ export declare module Countries {
     }
 
     export interface RootObject {
-        name?: Name;
+        name: Name;
         tld?: string[];
         cca2?: string;
         ccn3?: string;
@@ -262,7 +262,7 @@ export declare module Countries {
         car?: Car;
         timezones?: string[];
         continents?: string[];
-        flags?: Flags;
+        flags: Flags;
         coatOfArms?: CoatOfArms;
         startOfWeek?: string;
         capitalInfo?: CapitalInfo;

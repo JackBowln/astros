@@ -1,25 +1,17 @@
 <template>
-  <ul v-for="launch in launches" :key="launch.id">
-    <li>{{launch.details}}  
-
-    </li>
-    <li>{{launch.name}}  
-      <img :src="launch.links.patch.small" alt="">
-    </li>
-
-  </ul>
+  <div>
+    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+    <Card :countries="countries" />
+  </div>
 </template>
 
 <script setup lang="ts">
   import { computed, ref } from "vue"
-  import { useSpaceX } from "../stores/SpaceX"
-
-  const spaceXStore = useSpaceX()
-  spaceXStore.fetchLaunches()
-
-  const launches = computed(() => spaceXStore.launchesData)
-  const launchesRef = ref([spaceXStore.launchesData])
-  console.log(launches);
+  import { useApi } from "../stores/api"
+  import Card from "../components/Card.vue"
+  const store = useApi()
+  store.fetchLaunches()
+  const countries = computed(() => store.data)
 </script>
 
 <style scoped lang="scss"></style>
